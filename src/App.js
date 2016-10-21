@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
 
-import fx from 'money';
-
 export const fetchExchangeRateUSD = {
   get(amount) {
     return new Promise((resolve, reject) => {
@@ -35,7 +33,7 @@ export class Form extends Component {
         .then(response => {
           const rates = response.rates;
           const currency = rates[`${this.state.initialCurrency}`];
-          const convertedAmount = amount * currency
+          const convertedAmount = amount/currency;
           this.setState({convertedAmount: convertedAmount });
         }).catch(error => {
           this.setStae({error: 'Error converting amount'});
@@ -67,7 +65,7 @@ export class Form extends Component {
             
           </div>
         </div>
-        { convertedAmount }
+        <p className="lead">{ `USD ${convertedAmount}` }</p>
       </div>
     )
   }
@@ -78,7 +76,7 @@ export class MainApp extends Component {
     return (
       <div className="container">
         <div className="col-zm-8 col-sm-offset-2 text-center">
-          <h1>Get the exchange rate of any currency in USD</h1>
+          <h3>Get the exchange rate of any currency in USD</h3>
           <Form />
         </div>
       </div>
